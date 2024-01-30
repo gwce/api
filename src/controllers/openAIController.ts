@@ -2,13 +2,15 @@ import OpenAI from 'openai';
 import config from "../config/config";
 import logging from "../config/logging";
 
+const namespace = "OPENAI_CONTROLLER";
+
 const openai = new OpenAI({
   apiKey: config.openAIKey
 });
 
 const generateResponse = async (request: string) => {
 
-  logging.debug("OpenAI", "Generating response");
+  logging.debug(namespace, "Generating response");
 
   const params: OpenAI.Chat.ChatCompletionCreateParams = {
     messages: [

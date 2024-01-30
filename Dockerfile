@@ -1,6 +1,6 @@
 FROM mhart/alpine-node
 
-EXPOSE 3002
+EXPOSE 80
 WORKDIR /app
 COPY /dist /app
 COPY package.json /app
