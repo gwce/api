@@ -23,7 +23,7 @@ const generateResponse = async (request: string) => {
         content: 'You are a useful chat assistant.'
       }
     ],
-    max_tokens: 100,
+    max_tokens: 1000,
     model: 'gpt-3.5-turbo',
   };
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params);
