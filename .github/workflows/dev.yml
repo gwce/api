@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18.13
+          node-version: 18.15
    
       # Install dependencies
       - name: Install dependencies
@@ -45,4 +45,4 @@ jobs:
           push: true
           tags: |
             docker.tonoli.net/api:dev
-            docker.tonoli.net/api:0.0.1
+            docker.tonoli.net/api:0.0.3
