@@ -29,12 +29,16 @@ app.post("/openai", async (req: Request, res: Response) => {
   logging.debug(namespace, title);
 
   const response = await generateResponse(title);
-  res.send(response);
+  res.send(sanitizeResponse(response));
 });
 
 app.listen(port, () => {
   logging.info(namespace, `[server]: Server is running at http://localhost:${port}`);
 });
 
+function sanitizeResponse(response: string): string {
+  logging.debug(namespace, response.replace("```", "").replace("```", "").replace("json", ""));
+  return response.replace("```", "").replace("```", "").replace("json", "");
+}
 
 //curl -H 'Content-Type: application/json' -d '{ "title":"What is the capital of New Zealand"}' -X POST https://localhost:3334/openai
