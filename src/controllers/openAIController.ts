@@ -5,7 +5,7 @@ import logging from "../config/logging";
 const namespace = "OPENAI_CONTROLLER";
 
 const openai = new OpenAI({
-  apiKey: config.openAIKey
+  apiKey: config.openAIKey,
 });
 
 const generateResponse = async (request: string) => {
@@ -24,7 +24,7 @@ const generateResponse = async (request: string) => {
       }
     ],
     max_tokens: 1000,
-    model: 'gpt-3.5-turbo',
+    model: config.model || 'gpt-4o',
   };
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params);
   return chatCompletion.choices[0].message.content;
