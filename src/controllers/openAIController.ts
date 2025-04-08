@@ -5,6 +5,7 @@ import logging from "../config/logging";
 const namespace = "OPENAI_CONTROLLER";
 
 const openai = new OpenAI({
+  baseURL: config.url,
   apiKey: config.openAIKey,
 });
 
