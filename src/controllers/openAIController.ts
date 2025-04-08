@@ -11,20 +11,16 @@ const openai = new OpenAI({
 
 const generateResponse = async (request: string) => {
 
-  logging.debug(namespace, "Generating response");
+  logging.debug(namespace, "Generating response from " + config.url);
 
   const params: OpenAI.Chat.ChatCompletionCreateParams = {
     messages: [
       {
         role: 'user',
         content: `${request}`
-      },
-      {
-        role:'system',
-        content: 'You are a useful chat assistant.'
       }
     ],
-    max_tokens: 1000,
+    max_tokens: 2000,
     model: config.model || 'gpt-4o',
   };
   const chatCompletion: OpenAI.Chat.ChatCompletion = await openai.chat.completions.create(params);
