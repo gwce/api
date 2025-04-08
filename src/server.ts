@@ -32,6 +32,18 @@ app.post("/openai", async (req: Request, res: Response) => {
   res.send(sanitizeResponse(response));
 });
 
+const API_KEY = '3lKzAzauWMGQ1BGUBogcEGMl0cDyDUHJhpecveDJejw85HHaqb91Ez5L9moDXbrI';
+
+app.get('/auth', (req, res) => {
+  const key = req.header('X-API-Key');
+  if (key === API_KEY) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
+
+
 app.listen(port, () => {
   logging.info(namespace, `[server]: Server is running at http://localhost:${port}`);
 });
