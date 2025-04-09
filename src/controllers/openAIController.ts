@@ -4,13 +4,18 @@ import logging from "../config/logging";
 
 const namespace = "OPENAI_CONTROLLER";
 
-const openai = new OpenAI({
-  baseURL: config.url,
-  apiKey: config.openAIKey,
-});
 
-const generateResponse = async (request: string) => {
+const generateResponse = async (request: string, key: string) => {
 
+  const openai = new OpenAI({
+    baseURL: config.url,
+    apiKey: config.openAIKey,
+    defaultHeaders: {
+      'X-API-Key': key,
+      'Content-Type': 'application/json',
+    },
+  });
+  
   logging.debug(namespace, "Generating response from " + config.url);
 
   const params: OpenAI.Chat.ChatCompletionCreateParams = {

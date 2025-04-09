@@ -30,7 +30,7 @@ app.post("/ai", async (req: Request, res: Response) => {
   
     logging.debug(namespace, title);
   
-    const response = await generateResponse(title);
+    const response = await generateResponse(title, key);
     res.send(sanitizeResponse(response));
   } else {
     res.sendStatus(401);
