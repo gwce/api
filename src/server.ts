@@ -1,5 +1,6 @@
 import express, { Express, Request, Response } from "express";
 import logging from "./config/logging";
+import config from "./config/config";
 const { generateResponse } = require("./controllers/openAIController");
 const namespace = "SERVER";
 const app: Express = express();
@@ -16,33 +17,34 @@ app.get("/", (req: Request, res: Response) => {
  * @description This endpoint is used to generate a response from the OpenAI API.
  * @param {string} title The title of the question.
  */
-app.post("/openai", async (req: Request, res: Response) => {
+app.post("/ai", async (req: Request, res: Response) => {
   const title = req.body.title as string;
-
-  if (!title) {
-    return res.status(400).send({
-      ok: false,
-      error: "Please provide a title",
-    });
-  }
-
-  logging.debug(namespace, title);
-
-  const response = await generateResponse(title);
-  res.send(sanitizeResponse(response));
-});
-
-const API_KEY = '3lKzAzauWMGQ1BGUBogcEGMl0cDyDUHJhpecveDJejw85HHaqb91Ez5L9moDXbrI';
-
-app.get('/auth', (req, res) => {
   const key = req.header('X-API-Key');
-  if (key === API_KEY) {
-    res.sendStatus(200);
+  if (key === config.api_key) {
+    if (!title) {
+      return res.status(400).send({
+        ok: false,
+        error: "Please provide a title",
+      });
+    }
+  
+    logging.debug(namespace, title);
+  
+    const response = await generateResponse(title);
+    res.send(sanitizeResponse(response));
   } else {
     res.sendStatus(401);
   }
 });
 
+app.get('/auth', (req, res) => {
+  const key = req.header('X-API-Key');
+  if (key === config.api_key) {
+    res.sendStatus(200);
+  } else {
+    res.sendStatus(401);
+  }
+});
 
 app.listen(port, () => {
   logging.info(namespace, `[server]: Server is running at http://localhost:${port}`);
