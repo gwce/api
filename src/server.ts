@@ -55,4 +55,4 @@ function sanitizeResponse(response: string): string {
   return response.replace("```", "").replace("```", "").replace("json", "");
 }
 
-//curl -H 'Content-Type: application/json' -d '{ "title":"What is the capital of New Zealand"}' -X POST https://localhost:3334/openai
+//curl -H 'Content-Type: application/json' -d '{ "title":"What is the capital of New Zealand"}' -X POST https://localhost:3334/ai
