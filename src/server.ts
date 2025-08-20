@@ -10,12 +10,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
-  res.status(404).send("Not Found");
+  res.status(404);
 });
 
 /**
- * @description This endpoint is used to generate a response from the OpenAI API.
- * @param {string} title The title of the question.
+ * This endpoint is used to generate a response from the AI API and to obfuscate the use of the API key.
  */
 app.post("/ai", async (req: Request, res: Response) => {
   const title = req.body.title as string;
@@ -37,6 +36,10 @@ app.post("/ai", async (req: Request, res: Response) => {
   }
 });
 
+/**
+ * This endpoint is used to check if the API key is valid.
+ * It is used to authenticate the user before allowing access to the AI endpoint.
+ */
 app.get('/auth', (req, res) => {
   const key = req.header('X-API-Key');
   if (key === config.api_key) {
@@ -45,6 +48,7 @@ app.get('/auth', (req, res) => {
     res.sendStatus(401);
   }
 });
+
 
 app.listen(port, () => {
   logging.info(namespace, `[server]: Server is running at http://localhost:${port}`);
