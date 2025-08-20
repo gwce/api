@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import logging from "./config/logging";
 import config from "./config/config";
-const { generateResponse } = require("./controllers/openAIController");
+const { generateResponse } = require("./controllers/AIController");
 const namespace = "SERVER";
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -59,4 +59,6 @@ function sanitizeResponse(response: string): string {
   return response.replace("```", "").replace("```", "").replace("json", "");
 }
 
-//curl -H 'Content-Type: application/json' -d '{ "title":"What is the capital of New Zealand"}' -X POST https://localhost:3334/ai
+//curl -H 'Content-Type: application/json' -d '{ "title":"What is the capital of New Zealand"}' -X POST https://ai.tonoli.click/v1
+
+//curl -H 'Content-Type: application/json' -H 'X-API-Key: '  -H "Authorization: Bearer ollama" -d '{"messages":[{"role":"user","content":"What is the capital of New Zealand"}],"max_tokens":2000,"model":"gpt-4o"}' -X POST http://rick:11434/v1/chat/completions
